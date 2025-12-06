@@ -75,6 +75,9 @@
                 <button onclick="switchTab('waves')" id="btn-waves" class="nav-btn inactive-tab flex-shrink-0"><i class="fa-solid fa-water mr-2"></i>Wave Physics</button>
                 <button onclick="switchTab('anatomy')" id="btn-anatomy" class="nav-btn inactive-tab flex-shrink-0"><i class="fa-solid fa-layer-group mr-2"></i>Anatomy</button>
                 <button onclick="switchTab('safety')" id="btn-safety" class="nav-btn inactive-tab flex-shrink-0"><i class="fa-solid fa-shield-halved mr-2"></i>Safety Drill</button>
+                                <button onclick="switchTab('mechanism')" id="btn-mechanism" class="nav-btn inactive-tab flex-shrink-0">
+                    <i class="fa-solid fa-arrows-left-right mr-2"></i>Mechanism
+                </button>
             </nav>
         </div>
     </header>
@@ -212,6 +215,93 @@
             </div>
         </div>
 
+        <!-- MECHANISM TAB -->
+        <div id="view-mechanism" class="hidden">
+                        <section class="tab-content">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Left Column: Controls & Explanation -->
+                    <div class="lg:col-span-1 space-y-4">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                            <h3 class="font-bold text-lg mb-2 text-slate-800">Elastic Rebound Theory</h3>
+                            <p class="text-sm text-slate-600 mb-4">
+                                See how stress builds up over years and is released in seconds.
+                            </p>
+                            <ol class="list-decimal list-inside text-sm text-slate-600 space-y-2">
+                                <li><strong class="text-slate-800">Stress Build-up:</strong> Plates move, friction locks them.</li>
+                                <li><strong class="text-slate-800">Deformation:</strong> Rock bends (elastic energy).</li>
+                                <li><strong class="text-slate-800">Rupture:</strong> Rock snaps, releasing seismic waves.</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-bold text-sm">Stress Level</span>
+                                <span id="stress-percent" class="font-bold text-sm text-red-600">0%</span>
+                            </div>
+                            <!-- Stress Progress Bar -->
+                            <div class="w-full bg-slate-200 rounded-full h-4 overflow-hidden mb-4">
+                                <div id="stress-bar" class="bg-gradient-to-r from-yellow-400 to-red-600 h-full w-0 transition-all duration-300"></div>
+                            </div>
+                            
+                            <button onclick="buildStress()" id="btn-stress" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 rounded shadow transition-colors">
+                                <i class="fa-solid fa-arrows-left-right-to-line mr-2"></i> BUILD STRESS
+                            </button>
+                            <button onclick="resetMechanism()" class="w-full mt-2 bg-slate-200 hover:bg-slate-300 text-slate-600 font-bold py-2 rounded transition-colors text-sm">
+                                RESET
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Visual Simulation -->
+                    <div class="lg:col-span-2 bg-slate-600 rounded-xl p-8 relative overflow-hidden flex items-center justify-center shadow-inner border border-slate-700">
+                        <div class="absolute top-2 left-4 text-white/50 font-bold text-sm">TOP VIEW: STRIKE-SLIP FAULT</div>
+                        
+                        <!-- The Container that shakes -->
+                        <div id="mech-container" class="relative w-96 h-96 bg-stone-300 rounded shadow-2xl flex overflow-hidden border-4 border-stone-400">
+                            
+                            <!-- White flash overlay -->
+                            <div id="rupture-overlay" class="absolute inset-0 z-50 pointer-events-none"></div>
+
+                            <!-- Central Fault Line -->
+                            <div class="absolute top-0 bottom-0 left-1/2 w-0.5 border-l-2 border-dashed border-red-500/50 z-20 h-full" style="transform: translateX(-50%);"></div>
+
+                            <!-- Plate A (Left) -->
+                            <div id="plate-left" class="tectonic-plate w-1/2 h-full bg-stone-200 relative border-r border-stone-400">
+                                <!-- Texture -->
+                                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-500 to-transparent"></div>
+                                
+                                <!-- Road Line -->
+                                <div class="absolute top-1/2 w-full h-12 bg-slate-800 -mt-6 flex items-center overflow-hidden">
+                                    <div class="w-full h-0.5 bg-yellow-400 border-dashed border-white"></div>
+                                </div>
+                                <!-- Stress Arrow -->
+                                <div id="arrow-left" class="stress-arrow absolute top-8 left-1/2 -translate-x-1/2 text-4xl text-slate-400 font-bold transform transition-transform" style="transform: scale(1);">
+                                    <i class="fa-solid fa-arrow-up"></i>
+                                </div>
+                            </div>
+
+                            <!-- Plate B (Right) -->
+                            <div id="plate-right" class="tectonic-plate w-1/2 h-full bg-stone-200 relative border-l border-stone-400">
+                                <!-- Texture -->
+                                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-500 to-transparent"></div>
+
+                                <!-- Road Line -->
+                                <div class="absolute top-1/2 w-full h-12 bg-slate-800 -mt-6 flex items-center overflow-hidden">
+                                    <div class="w-full h-0.5 bg-yellow-400 border-dashed border-white"></div>
+                                </div>
+                                <!-- Stress Arrow -->
+                                <div id="arrow-right" class="stress-arrow absolute bottom-8 left-1/2 -translate-x-1/2 text-4xl text-slate-400 font-bold transform transition-transform" style="transform: scale(1);">
+                                    <i class="fa-solid fa-arrow-down"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
         <!-- SAFETY TAB -->
         <div id="view-safety" class="hidden">
             <div class="text-center mb-8">
@@ -248,7 +338,7 @@
     <script>
         // --- Core Logic ---
         function switchTab(tab) {
-            ['sim', 'waves', 'anatomy', 'safety'].forEach(t => {
+            ['sim', 'waves', 'anatomy', 'mechanism', 'safety'].forEach(t => {
                 document.getElementById('view-'+t).classList.add('hidden');
                 document.getElementById('btn-'+t).className="nav-btn inactive-tab flex-shrink-0";
             });
@@ -363,6 +453,89 @@
                 };
             }, 8000);
         }
+
+            // --- MECHANISM LOGIC ---
+    let stressLevel = 0;
+    const plateLeft = document.getElementById('plate-left');
+    const plateRight = document.getElementById('plate-right');
+    const stressBar = document.getElementById('stress-bar');
+    const stressPercent = document.getElementById('stress-percent');
+    const btnStress = document.getElementById('btn-stress');
+    const mechContainer = document.getElementById('mech-container');
+    const arrowLeft = document.getElementById('arrow-left');
+    const arrowRight = document.getElementById('arrow-right');
+
+    function buildStress() {
+        if (stressLevel >= 100) return;
+        stressLevel += 20;
+        if (stressLevel > 100) stressLevel = 100;
+        
+        stressBar.style.width = `${stressLevel}%`;
+        stressPercent.innerText = `${stressLevel}%`;
+
+        // Strain Plates
+        const skewVal = stressLevel * 0.15;
+        plateLeft.style.transform = `skewY(${skewVal}deg)`;
+        plateRight.style.transform = `skewY(${skewVal}deg)`;
+        
+        // Grow Arrows & Change Color
+        const scale = 1 + (stressLevel / 100);
+        const colorVal = Math.floor(255 * (stressLevel / 100)); 
+        const colorStr = `rgb(${colorVal}, 50, 50)`; 
+        
+        arrowLeft.style.transform = `translate(-50%, 0) scale(${scale})`;
+        arrowRight.style.transform = `translate(-50%, 0) scale(${scale})`;
+        arrowLeft.style.color = colorStr;
+        arrowRight.style.color = colorStr;
+
+        if (stressLevel === 100) {
+            btnStress.disabled = true;
+            btnStress.innerText = "CRITICAL LIMIT!";
+            setTimeout(releaseMechanism, 800);
+        }
+    }
+
+    function releaseMechanism() {
+        plateLeft.classList.add('plate-snap');
+        plateRight.classList.add('plate-snap');
+        
+        // Snap
+        plateLeft.style.transform = `skewY(0deg) translateY(-40px)`;
+        plateRight.style.transform = `skewY(0deg) translateY(40px)`;
+        
+        // Flash
+        document.getElementById('rupture-overlay').classList.add('rupture-flash');
+        
+        // Shake using existing shake-2
+        mechContainer.classList.add('shake-2');
+
+        setTimeout(() => {
+            mechContainer.classList.remove('shake-2');
+            document.getElementById('rupture-overlay').classList.remove('rupture-flash');
+            stressPercent.innerText = "RUPTURE!";
+            stressPercent.classList.add('text-green-600');
+        }, 500);
+    }
+
+    function resetMechanism() {
+        stressLevel = 0;
+        stressBar.style.width = '0%';
+        stressPercent.innerText = '0%';
+        stressPercent.classList.remove('text-green-600');
+        
+        btnStress.disabled = false;
+        btnStress.innerText = "BUILD STRESS";
+
+        plateLeft.classList.remove('plate-snap');
+        plateRight.classList.remove('plate-snap');
+        plateLeft.style.transform = `none`;
+        plateRight.style.transform = `none`;
+
+        arrowLeft.style.transform = `translate(-50%, 0) scale(1)`;
+        arrowRight.style.transform = `translate(-50%, 0) scale(1)`;
+        arrowLeft.style.color = '#94a3b8';
+        arrowRight.style.color = '#94a3b8';
+    }
     </script>
 </body>
 </html> 
