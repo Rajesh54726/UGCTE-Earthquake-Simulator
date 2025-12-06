@@ -43,6 +43,20 @@
         .active-tab { background-color: #dc2626; color: white; box-shadow: 0 2px 4px rgba(220, 38, 38, 0.3); }
         .inactive-tab { background-color: white; color: #475569; }
         .inactive-tab:hover { background-color: #fee2e2; color: #991b1b; }
+        /* --- Mechanism: Stress Arrows (CSS) --- */
+.stress-arrow {
+    transition: all 0.3s ease;
+    opacity: 0.5;
+}
+.tectonic-plate { transition: transform 0.3s ease-out; }
+.plate-snap { transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.rupture-flash {
+    animation: flash 0.2s;
+}
+@keyframes flash {
+    0%, 100% { background: transparent; }
+    50% { background: rgba(255, 255, 255, 0.8); }
+}
     </style>
 </head>
 <body class="text-slate-800">
